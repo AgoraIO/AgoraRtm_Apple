@@ -1,0 +1,11 @@
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+.swiftpm/
+xcuserdata/
+xcshareddata/
+*.xcframework
+*.xcframework.zip
+Package.resolved
+docbuild
