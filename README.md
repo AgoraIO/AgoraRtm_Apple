@@ -1,4 +1,5 @@
-This is a test repository, not recommended for use at this date.
+> [!WARNING]
+> This is a beta product
 
 # AgoraRtm
 
