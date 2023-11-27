@@ -27,8 +27,8 @@ let package = Package(
 //        .binaryTarget(name: "AgoraRtmKit-OC", path: "AgoraRtmKit.xcframework.zip"),
         .binaryTarget(
             name: "AgoraRtmKit-OC",
-            url: "https://github.com/AgoraIO/AgoraRtm_Apple/releases/download/2.1.7-beta.1/AgoraRtmKit.xcframework.zip",
-            checksum: "4e6c6dc8e02ed3b3acf52806f38c9cb41a51a99c1182036507352e591b896922"
+            url: "https://github.com/AgoraIO/AgoraRtm_Apple/releases/download/2.1.7-vision.1/AgoraRtmKit.xcframework.zip",
+            checksum: "190233b0d7b519ec28a5936a73ecb5ccd3758cd1a966e01c334921d298689d35"
         ),
         .testTarget(
             name: "AgoraRtmTests",
