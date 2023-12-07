@@ -246,11 +246,11 @@ open class RtmStreamChannel: NSObject {
     /// - Parameters:
     ///   - message: The message to be published. Must be `Codable`.
     ///   - topic: The name of the topic to which the message will be published.
-    ///   - options: Optional configurations for publishing the message. Defaults to `nil`.
+    ///   - options: Optional configurations for publishing the message to a topic. Defaults to `nil`.
     ///   - completion: A completion block that returns a result containing an ``RtmCommonResponse``
     ///                 or ``RtmErrorInfo``.
     public func publishTopicMessage(
-        _ message: Codable, in topic: String, with options: RtmPublishOptions?,
+        _ message: Codable, in topic: String, with options: RtmTopicMessageOptions?,
         completion: ((Result<RtmCommonResponse, RtmErrorInfo>) -> Void)? = nil
     ) {
         let msgString: String
@@ -283,7 +283,7 @@ open class RtmStreamChannel: NSObject {
     /// - Parameters:
     ///   - message: The message to be published. Must be `Codable`.
     ///   - topic: The name of the topic to which the message will be published.
-    ///   - options: Optional configurations for publishing the message. Defaults to `nil`.
+    ///   - options: Optional configurations for publishing the message to a topic. Defaults to `nil`.
     ///
     /// - Returns: An ``RtmCommonResponse`` containing information about the published message.
     ///
@@ -291,7 +291,7 @@ open class RtmStreamChannel: NSObject {
     @available(iOS 13.0.0, *) @discardableResult
     public func publishTopicMessage(
         message: Codable,
-        inTopic topic: String, with options: RtmPublishOptions?
+        inTopic topic: String, with options: RtmTopicMessageOptions?
     ) async throws -> RtmCommonResponse {
         let msgString: String
         do {

@@ -12,6 +12,36 @@ public class RtmPublishOptions {
     /// The custom type of the message, up to 32 bytes for customization.
     public let customType: String
 
+    /// Type of channel we are publishing to.
+    public var channelType: RtmChannelType
+
+    /// Initializes an instance of `AgoraRtmPublishOptions`.
+    ///
+    /// - Parameters:
+    ///   - customType: The custom type of the message, up to 32 bytes for customization.
+    ///   - channelType: Type of channel we are publishing to.
+    ///     Valid types for this are ``RtmChannelType/message`` and ``RtmChannelType/user``.
+    public init(customType: String, channelType: RtmChannelType = .message) {
+        self.customType = customType
+        self.channelType = channelType
+    }
+
+    /// Converts the `AgoraRtmPublishOptions` to the corresponding `RtmPublishOptions` object.
+    ///
+    /// - Returns: The `RtmPublishOptions` object with the options set based on the `AgoraRtmPublishOptions`.
+    internal var objcVersion: AgoraRtmPublishOptions {
+        let objcOpt = AgoraRtmPublishOptions()
+        objcOpt.customType = customType
+        objcOpt.channelType = channelType.ocChannelType
+        return objcOpt
+    }
+}
+
+/// Options for publishing a message to a topic in Agora Real-Time Messaging (RTM) system.
+public class RtmTopicMessageOptions {
+    /// The custom type of the message, up to 32 bytes for customization.
+    public let customType: String
+
     /// The time to calibrate data with media, only valid when a user joins the topic
     /// with ``RtmJoinTopicOption/syncWithMedia`` in a stream channel.
     public var sendTs: UInt64 = 0
@@ -30,8 +60,8 @@ public class RtmPublishOptions {
     /// Converts the `AgoraRtmPublishOptions` to the corresponding `RtmPublishOptions` object.
     ///
     /// - Returns: The `RtmPublishOptions` object with the options set based on the `AgoraRtmPublishOptions`.
-    internal var objcVersion: AgoraRtmPublishOptions {
-        let objcOpt = AgoraRtmPublishOptions()
+    internal var objcVersion: AgoraRtmTopicMessageOptions {
+        let objcOpt = AgoraRtmTopicMessageOptions()
         objcOpt.customType = customType
         objcOpt.sendTs = sendTs
         return objcOpt

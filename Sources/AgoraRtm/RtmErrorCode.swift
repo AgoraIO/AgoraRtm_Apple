@@ -129,6 +129,12 @@ public enum RtmErrorCode: Int, ErrorCode {
     case duplicateOperation = -10017
     /// Already called destroy or release, this instance is forbidden to call any API. Please create a new instance.
     case instanceAlreadyReleased = -10018
+    /// Invalid channel type
+    case invalidChannelType = -10019
+    /// The encryption parameter is invalid.
+    case invalidEncryptionParameter = -10020
+    /// The operation is too frequent.
+    case operationRateExceedLimitation = -10021
     /// The user has not joined the channel.
     case channelNotJoined = -11001
     /// The user has not subscribed to the channel.
@@ -193,6 +199,8 @@ public enum RtmErrorCode: Int, ErrorCode {
     case channelUnsupportedMessageType = -11031
     /// The channel presence is not ready.
     case channelPresenceNotReady = -11032
+    /// The destination user of publish message is offline.
+    case channelReceiverOffline = -11033
     /// The storage operation failed.
     case storageOperationFailed = -12001
     /// The metadata item count exceeds the limit.

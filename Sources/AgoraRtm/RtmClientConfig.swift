@@ -105,7 +105,11 @@ import AgoraRtmKit
     }
 
     public static func encryptSaltString(salt: String?) -> Data? {
-        guard let salt else { return nil }
-        return Data(base64Encoded: salt, options: .ignoreUnknownCharacters)
+        if let salt, let data = salt.data(using: .utf8) {
+            let base64Encoded = data.base64EncodedString()
+            // Now use base64Encoded in your function call
+            return Data(base64Encoded: base64Encoded, options: .ignoreUnknownCharacters)
+        }
+        return nil
     }
 }

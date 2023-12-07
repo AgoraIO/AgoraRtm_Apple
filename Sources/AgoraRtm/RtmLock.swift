@@ -11,14 +11,13 @@ public enum RtmChannelDetails {
     case none(String)
     case messageChannel(String)
     case streamChannel(String)
+    case user(String)
     internal var objcVersion: (channelName: String, channelType: AgoraRtmChannelType) {
         switch self {
-        case .none(let name):
-            return (name, .none)
-        case .messageChannel(let name):
-            return (name, .message)
-        case .streamChannel(let name):
-            return (name, .stream)
+        case .none(let name):           (name, .none)
+        case .messageChannel(let name): (name, .message)
+        case .streamChannel(let name):  (name, .stream)
+        case .user(let username):       (username, .user)
         }
     }
     /// Initializes an instance of `RtmChannelInfo`.
@@ -26,12 +25,12 @@ public enum RtmChannelDetails {
     /// - Parameters:
     ///   - agoraChannelInfo: The `AgoraRtmChannelInfo` instance.
     internal init(_ agoraChannelInfo: AgoraRtmChannelInfo) {
-        switch agoraChannelInfo.channelType {
-        case .message: self = .messageChannel(agoraChannelInfo.channelName)
-        case .stream: self = .streamChannel(agoraChannelInfo.channelName)
-        case .none: self = .none(agoraChannelInfo.channelName)
-        @unknown default:
-            self = .none(agoraChannelInfo.channelName)
+        self = switch agoraChannelInfo.channelType {
+        case .message: .messageChannel(agoraChannelInfo.channelName)
+        case .stream: .streamChannel(agoraChannelInfo.channelName)
+        case .none: .none(agoraChannelInfo.channelName)
+        case .user: .user(agoraChannelInfo.channelName)
+        @unknown default: .none(agoraChannelInfo.channelName)
         }
     }
 }

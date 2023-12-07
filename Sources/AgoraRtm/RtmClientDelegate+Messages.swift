@@ -15,6 +15,17 @@ public enum RtmChannelType: Int {
     case message = 1
     /// Stream channel type.
     case stream = 2
+    /// User channel type.
+    case user = 3
+
+    var ocChannelType: AgoraRtmChannelType {
+        switch self {
+        case .stream: .stream
+        case .message: .message
+        case .user: .user
+        case .none: .none
+        }
+    }
 }
 
 /// The type of an RTM message.
