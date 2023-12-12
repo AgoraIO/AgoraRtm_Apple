@@ -32,63 +32,57 @@ final class RtmClientKitTests: XCTestCase {
     }
 
     func testLogin() async {
-        await executeAndValidateError(
-            { try await self.rtmClient.login() },
-            errorCode: .invalidToken
-        )
+        await executeAndValidateError({
+            try await self.rtmClient.login()
+        }, errorCode: .invalidToken, source: "\(#function):\(#line)")
     }
 
     // Test invalid initialization
     func testInvalidAppIdInit() async throws {
         _ = try? rtmClient?.destroy()
         let config = RtmClientConfig(appId: "bad-app-id", userId: "yourUserId")
-        await executeAndValidateError(
-            { try RtmClientKit(config: config, delegate: nil) },
-            errorCode: .invalidAppId
-        )
+        await executeAndValidateError({
+            try RtmClientKit(config: config, delegate: nil)
+        }, errorCode: .invalidAppId, source: "\(#function):\(#line)")
     }
 
     /// Test `RtmClientKit/setParameters(:)`
     func testSetParams() async {
-        await executeAndValidateError(
-            { try rtmClient.setParameters("test") },
-            errorCode: .invalidParameter
-        )
+        await executeAndValidateError({
+            try rtmClient.setParameters("test")
+        }, errorCode: .invalidParameter, source: "\(#function):\(#line)")
     }
 
     // Generic function to handle and validate errors from async throwable functions
     func executeAndValidateError<T>(
         _ asyncFunction: () async throws -> T,
-        errorCode: RtmErrorCode
+        errorCode: RtmErrorCode, source: String
     ) async {
         do {
             _ = try await asyncFunction()
-            XCTFail()
+            XCTFail("expecting a failure on asyncFunction. \(source)")
         } catch {
             guard let err = error as? RtmErrorInfo
-            else { return XCTFail("invalid error type.") }
-            XCTAssertEqual(err.errorCode, errorCode)
+            else { return XCTFail("invalid error type. \(source)") }
+            XCTAssertEqual(err.errorCode, errorCode, "incorrect error code found. \(source)")
         }
     }
 
     func testCreateStreamChannel() async throws {
         let validChName = "valid-name"
         let invalidChName = "不好"
-        await executeAndValidateError(
-            { try self.rtmClient.createStreamChannel(invalidChName) },
-            errorCode: .invalidChannelName
-        )
+        await executeAndValidateError({
+            try self.rtmClient.createStreamChannel(invalidChName)
+        }, errorCode: .invalidChannelName, source: "\(#function):\(#line)")
 
         let streamChannel = try self.rtmClient.createStreamChannel(validChName)
         XCTAssertEqual(validChName, streamChannel.channelName)
 
-        await executeAndValidateError(
-            { try await streamChannel.leave() },
-            errorCode: .channelNotJoined
-        )
-        await executeAndValidateError(
-            { try await streamChannel.join(with: RtmJoinChannelOption(token: nil)) },
-            errorCode: .notLogin
-        )
+        await executeAndValidateError({
+            try await streamChannel.leave()
+        }, errorCode: .channelNotJoined, source: "\(#function):\(#line)")
+        await executeAndValidateError({
+            try await streamChannel.join(with: RtmJoinChannelOption(token: nil))
+        }, errorCode: .notLogin, source: "\(#function):\(#line)")
     }
 }
