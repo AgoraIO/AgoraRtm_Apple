@@ -1,7 +1,13 @@
 > [!WARNING]
 > This is a beta product
 
+
 # AgoraRtm
+
+<p align="center">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FAgoraIO%2FAgoraRtm_Apple%2Fbadge%3Ftype%3Dswift-versions" />
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FAgoraIO%2FAgoraRtm_Apple%2Fbadge%3Ftype%3Dplatforms" />
+</p>
 
 AgoraRtm is a Swift package that provides an easy-to-use interface for integrating Agora Real-Time Messaging (RTM) into your iOS applications. It offers a set of classes and methods that enable you to establish real-time messaging and communication channels.
 
