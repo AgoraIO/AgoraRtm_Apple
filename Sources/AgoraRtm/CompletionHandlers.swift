@@ -19,7 +19,7 @@ internal struct CompletionHandlers {
         guard let resp = block.resp else {
             return completion(.failure(.noKnownError(operation: operation)))
         }
-        completion(.success(T.init(resp)))
+        completion(.success(T(resp)))
     }
 
     static func handleAsyncThrow<T: RtmResponseProtocol>(

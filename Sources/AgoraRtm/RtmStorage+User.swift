@@ -47,7 +47,7 @@ extension RtmStorage {
     ///   - options: The options for operating the metadata. Default is nil.
     /// - Returns: On success, it returns ``RtmCommonResponse``.
     ///            On failure, it throws ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func setMetadata(
         forUser userId: String,
         data: RtmMetadata,
@@ -104,7 +104,7 @@ extension RtmStorage {
     ///   - options: The options for operating the metadata. Default is nil.
     /// - Returns: On success, it returns `RtmCommonResponse`.
     ///            On failure, it throws `RtmErrorInfo`.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func updateMetadata(
         forUser userId: String,
         data: RtmMetadata,
@@ -158,7 +158,7 @@ extension RtmStorage {
     ///   - options: The options for operating the metadata. Default is nil.
     /// - Returns: On success, it returns `RtmCommonResponse`.
     ///            On failure, it throws `RtmErrorInfo`.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func removeMetadata(
         forUser userId: String,
         data: RtmMetadata,
@@ -195,7 +195,7 @@ extension RtmStorage {
     ///   - userId: The user ID of the specified user.
     /// - Returns: On success, it returns ``RtmGetMetadataResponse``.
     ///            On failure, throws ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, macOS 12.0, *)
     public func getMetadata(
         forUser userId: String
     ) async throws -> RtmGetMetadataResponse {
@@ -225,7 +225,7 @@ extension RtmStorage {
     ///   - userId: The user ID of the specified user.
     /// - Returns: On success, it returns ``RtmCommonResponse``.
     ///            On failure, it throws ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func subscribeToMetadata(
         forUser userId: String
     ) async throws -> RtmCommonResponse {
@@ -256,7 +256,7 @@ extension RtmStorage {
     ///   - userId: The user ID of the specified user.
     /// - Returns: On success, it returns ``RtmCommonResponse``.
     ///            On failure, it throws ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func unsubscribeFromMetadata(
         forUser userId: String
     ) async throws -> RtmCommonResponse {

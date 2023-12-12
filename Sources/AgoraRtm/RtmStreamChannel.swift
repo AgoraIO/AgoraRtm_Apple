@@ -17,10 +17,8 @@ open class RtmStreamChannel: NSObject {
 
     /// Initializes an ``RtmStreamChannel`` instance with the specified `AgoraRtmStreamChannel`.
     ///
-    /// - Parameter channel: The `AgoraRtmStreamChannel` to wrap. Pass `nil` to create
-    ///                      an `RtmStreamChannel` instance with no underlying channel.
-    internal init?(channel: AgoraRtmStreamChannel?) {
-        guard let channel else { return nil }
+    /// - Parameter channel: The `AgoraRtmStreamChannel` to wrap.
+    internal init(channel: AgoraRtmStreamChannel) {
         self.channel = channel
         super.init()
     }
@@ -53,7 +51,7 @@ open class RtmStreamChannel: NSObject {
     ///
     /// - Returns: A response confirming the result of the join attempt,
     ///            currently an ``RtmCommonResponse`` object.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func join(
         with option: RtmJoinChannelOption
     ) async throws -> RtmCommonResponse {
@@ -75,7 +73,7 @@ open class RtmStreamChannel: NSObject {
         }
     }
 
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func leave() async throws -> RtmCommonResponse {
         return try CompletionHandlers.handleAsyncThrow(await channel.leave(), operation: #function)
     }
@@ -96,7 +94,7 @@ open class RtmStreamChannel: NSObject {
         })
     }
 
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func renewToken(_ token: String) async throws -> RtmCommonResponse {
         return try CompletionHandlers.handleAsyncThrow(await channel.renewToken(token), operation: #function)
     }
@@ -125,7 +123,7 @@ open class RtmStreamChannel: NSObject {
     ///   - option: The ``RtmJoinTopicOption`` to use for joining the channel.
     /// - Returns: A ``RtmCommonResponse`` object representing the result of the operation.
     /// - Throws: An error of type ``RtmErrorInfo`` if the operation fails.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func joinTopic(
         _ topic: String, with option: RtmJoinTopicOption? = nil
     ) async throws -> RtmCommonResponse {
@@ -156,7 +154,7 @@ open class RtmStreamChannel: NSObject {
     /// - Parameter topic: The name of the stream channel to leave.
     /// - Returns: A ``RtmCommonResponse`` object representing the result of the operation.
     /// - Throws: An error of type ``RtmErrorInfo`` if the operation fails.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func leaveTopic(
         _ topic: String
     ) async throws -> RtmCommonResponse {
@@ -192,7 +190,7 @@ open class RtmStreamChannel: NSObject {
     /// - Returns:
     ///   A result that either provides a successful response ``RtmTopicSubscriptionResponse``
     ///   or throws an error ``RtmErrorInfo``.
-    @discardableResult @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func subscribe(
         toTopic topic: String, withOptions options: RtmTopicOption? = nil
     ) async throws -> RtmTopicSubscriptionResponse {
@@ -231,7 +229,7 @@ open class RtmStreamChannel: NSObject {
     /// - Returns:
     ///   A result that either provides a successful response ``RtmCommonResponse``
     ///   or throws an error ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func unsubscribe(
         fromTopic topic: String, withOptions options: RtmTopicOption? = nil
     ) async throws -> RtmCommonResponse {
@@ -288,7 +286,7 @@ open class RtmStreamChannel: NSObject {
     /// - Returns: An ``RtmCommonResponse`` containing information about the published message.
     ///
     /// - Throws: ``RtmErrorInfo`` if an error occurs during the publishing process.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func publishTopicMessage(
         message: Codable,
         inTopic topic: String, with options: RtmTopicMessageOptions?
@@ -335,7 +333,7 @@ open class RtmStreamChannel: NSObject {
     /// - Parameter topic: The name of the stream channel to retrieve the list of subscribed users from.
     /// - Returns: An array of user IDs representing the list of subscribed users.
     /// - Throws: An error of type ``RtmErrorInfo`` if the operation fails.
-    @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, macOS 12.0, *)
     public func getSubscribedUserList(
         forTopic topic: String
     ) async throws -> [String] {

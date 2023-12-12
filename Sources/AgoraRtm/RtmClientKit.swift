@@ -39,7 +39,7 @@ open class RtmClientKit {
             if let delegate { self.delegateSet.add(delegate) }
             self.agoraRtmClient = rtmClient
         } catch let err as AgoraRtmErrorInfo {
-            throw RtmErrorInfo.init(from: err) ?? .noKnownError(operation: #function)
+            throw RtmErrorInfo(from: err) ?? .noKnownError(operation: #function)
         }
     }
 
@@ -74,7 +74,7 @@ open class RtmClientKit {
     ///
     /// - Parameter token: The token to log in with.
     /// - Returns: A ``RtmCommonResponse`` if the login is successful, otherwise throws an ``RtmErrorInfo`` error.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func login(byToken token: String? = nil) async throws -> RtmCommonResponse {
         return try CompletionHandlers.handleAsyncThrow(await agoraRtmClient.login(token), operation: #function)
     }
@@ -93,7 +93,7 @@ open class RtmClientKit {
     /// Asynchronously logs out of the Agora RTM system.
     ///
     /// This method can throw an ``RtmErrorInfo`` error if the logout operation fails.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func logout() async throws -> RtmCommonResponse {
         return try CompletionHandlers.handleAsyncThrow(await agoraRtmClient.logout(), operation: #function)
     }
@@ -118,7 +118,7 @@ open class RtmClientKit {
     ///   - token: The new token to renew.
     ///
     /// This method can throw a ``RtmErrorInfo`` error if the token renewal operation fails.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func renewToken(_ token: String) async throws -> RtmCommonResponse {
         try CompletionHandlers.handleAsyncThrow(await agoraRtmClient.renewToken(token), operation: #function)
     }
@@ -148,7 +148,7 @@ open class RtmClientKit {
     ///   - features: The options for subscribing to the channel.
     ///
     /// This method can throw a ``RtmCommonResponse`` error if the subscription operation fails.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func subscribe(
         toChannel channelName: String, features: RtmSubscribeFeatures = [.messages, .presence]
     ) async throws -> RtmCommonResponse {
@@ -179,7 +179,7 @@ open class RtmClientKit {
     ///   - channelName: The name of the channel to unsubscribe from.
     ///
     /// This method can throw a ``RtmCommonResponse`` error if the unsubscription operation fails.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func unsubscribe(fromChannel channelName: String) async throws -> RtmCommonResponse {
         try CompletionHandlers.handleAsyncThrow(
             await agoraRtmClient.unsubscribe(channelName), operation: #function
@@ -231,7 +231,7 @@ open class RtmClientKit {
     ///   - publishOption: The options for publishing the message.
     ///
     /// This method will throw an ``RtmErrorInfo`` if the encoding or publish operation fails.
-    @discardableResult @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func publish(
         message: Codable, to channelName: String, withOption publishOption: RtmPublishOptions? = nil
     ) async throws -> RtmCommonResponse {
@@ -285,8 +285,12 @@ open class RtmClientKit {
     ///
     /// - Parameter channelName: The name of the stream channel to create.
     /// - Returns: The newly created ``RtmStreamChannel`` instance.
-    public func createStreamChannel(_ channelName: String) throws -> RtmStreamChannel? {
-        RtmStreamChannel(channel: try agoraRtmClient.createStreamChannel(channelName))
+    public func createStreamChannel(_ channelName: String) throws -> RtmStreamChannel {
+        do {
+            return .init(channel: try agoraRtmClient.createStreamChannel(channelName))
+        } catch let err as AgoraRtmErrorInfo {
+            throw RtmErrorInfo(from: err) ?? .noKnownError(operation: #function)
+        }
     }
 
     /// Destroys the Agora RTM client.
