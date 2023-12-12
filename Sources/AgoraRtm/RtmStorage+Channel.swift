@@ -51,7 +51,7 @@ extension RtmStorage {
     ///   - lock: The lock for operating channel metadata. Default is nil.
     /// - Throws: If the operation encounters an error, it throws an `RtmErrorInfo`.
     /// - Returns: The operation result, an instance of `RtmCommonResponse`.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func setMetadata(
         forChannel channel: RtmChannelDetails,
         data: RtmMetadata,
@@ -114,7 +114,7 @@ extension RtmStorage {
     ///   - options: The options for operating the metadata. Default is nil.
     ///   - lock: The lock for operating channel metadata. Default is nil.
     /// - Returns: On success, it returns ``RtmCommonResponse``. On failure, it throws ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func updateMetadata(
         forChannel channel: RtmChannelDetails,
         data: RtmMetadata,
@@ -178,7 +178,7 @@ extension RtmStorage {
     ///   - lock: The lock for operating channel metadata. Default is nil.
     /// - Returns: On success, it returns ``RtmCommonResponse``.
     ///            On failure, it throws ``RtmErrorInfo``.
-    @available(iOS 13.0.0, *) @discardableResult
+    @available(iOS 13.0.0, macOS 12.0, *) @discardableResult
     public func removeMetadata(
         fromChannel channel: RtmChannelDetails,
         data: RtmMetadata,
@@ -224,7 +224,7 @@ extension RtmStorage {
     ///   - channel: The type and name of the channel.
     /// - Returns: A `Result` indicating the operation's success or failure. On success, it contains
     ///            an optional ``RtmGetMetadataResponse``. On failure, it contains `RtmErrorInfo`.
-    @available(iOS 13.0.0, *)
+    @available(iOS 13.0.0, macOS 12.0, *)
     public func getMetadata(
         forChannel channel: RtmChannelDetails
     ) async throws -> RtmGetMetadataResponse {

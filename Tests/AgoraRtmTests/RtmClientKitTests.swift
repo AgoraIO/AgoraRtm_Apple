@@ -9,7 +9,7 @@ import XCTest
 @testable import AgoraRtm
 import AgoraRtmKit
 
-@available(iOS 13.0.0, *)
+@available(iOS 13.0.0, macOS 12.0, *)
 final class RtmClientKitTests: XCTestCase {
 
     var rtmClient: RtmClientKit!
@@ -32,46 +32,63 @@ final class RtmClientKitTests: XCTestCase {
     }
 
     func testLogin() async {
-        do {
-            try await rtmClient.login()
-            XCTFail("expected login to fail")
-        } catch {
-            guard let rtmError = error as? RtmErrorInfo else {
-                XCTFail("expected RtmErrorInfo, but got \(error)")
-                return
-            }
-            XCTAssertEqual(rtmError.errorCode, .invalidToken)
-        }
+        await executeAndValidateError(
+            { try await self.rtmClient.login() },
+            errorCode: .invalidToken
+        )
     }
 
     // Test invalid initialization
-    func testInvalidAppIdInit() throws {
+    func testInvalidAppIdInit() async throws {
         _ = try? rtmClient?.destroy()
-//        XCTAssertNil(rtmClient.agoraRtmClient)
         let config = RtmClientConfig(appId: "bad-app-id", userId: "yourUserId")
-        let expectation = XCTestExpectation(description: "Error thrown")
-        XCTAssertThrowsError(try RtmClientKit(config: config, delegate: nil)) { error in
-            if let error = error as? RtmErrorInfo {
-                XCTAssertEqual(error.errorCode, .invalidAppId)
-            } else {
-                XCTFail("Expected RtmErrorInfo but got \(type(of: error))")
-            }
-            expectation.fulfill()
-        }
-        wait(for: [expectation], timeout: 0.1)
+        await executeAndValidateError(
+            { try RtmClientKit(config: config, delegate: nil) },
+            errorCode: .invalidAppId
+        )
     }
 
     /// Test `RtmClientKit/setParameters(:)`
-    func testSetParams() {
-        let expectation = XCTestExpectation(description: "Error thrown")
-        XCTAssertThrowsError(try rtmClient.setParameters("test"), "Invalid thrown response") { error in
-            if let error = error as? RtmErrorInfo {
-                XCTAssertEqual(error.errorCode, .invalidParameter)
-            } else {
-                XCTFail("Expected RtmErrorInfo but got \(type(of: error))")
-            }
-            expectation.fulfill()
+    func testSetParams() async {
+        await executeAndValidateError(
+            { try rtmClient.setParameters("test") },
+            errorCode: .invalidParameter
+        )
+    }
+
+    // Generic function to handle and validate errors from async throwable functions
+    func executeAndValidateError<T>(
+        _ asyncFunction: () async throws -> T,
+        errorCode: RtmErrorCode
+    ) async {
+        do {
+            _ = try await asyncFunction()
+            XCTFail()
+        } catch {
+            guard let err = error as? RtmErrorInfo
+            else { return XCTFail("invalid error type.") }
+            XCTAssertEqual(err.errorCode, errorCode)
         }
-        wait(for: [expectation], timeout: 0.1)
+    }
+
+    func testCreateStreamChannel() async throws {
+        let validChName = "valid-name"
+        let invalidChName = "不好"
+        await executeAndValidateError(
+            { try self.rtmClient.createStreamChannel(invalidChName) },
+            errorCode: .invalidChannelName
+        )
+
+        let streamChannel = try self.rtmClient.createStreamChannel(validChName)
+        XCTAssertEqual(validChName, streamChannel.channelName)
+
+        await executeAndValidateError(
+            { try await streamChannel.leave() },
+            errorCode: .channelNotJoined
+        )
+        await executeAndValidateError(
+            { try await streamChannel.join(with: RtmJoinChannelOption(token: nil)) },
+            errorCode: .notLogin
+        )
     }
 }
