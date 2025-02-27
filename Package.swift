@@ -1,39 +1,25 @@
-// swift-tools-version: 5.8
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version: 5.6
 import PackageDescription
 
 let package = Package(
-    name: "AgoraRtm",
-    platforms: [.iOS(.v11), .macOS(.v10_15)],
+    name: "AgoraRTM",
+    platforms: [.iOS(.v12), .macOS(.v10_15)],
     products: [
         .library(
-            name: "AgoraRtmKit-Swift",
-            targets: ["AgoraRtm"]),
-        .library(
-            name: "AgoraRtmKit-OC",
-            targets: ["AgoraRtmKit-OC"]
-        )
-    ],
-    dependencies: [
-//        .package(url: "https://github.com/realm/SwiftLint.git", from: .init(0, 52, 4))
+            name: "AgoraRTM",
+            targets: ["AgoraRtmKit", "aosl"]
+        ),
     ],
     targets: [
-        .target(
-            name: "AgoraRtm",
-            dependencies: ["AgoraRtmKit-OC"]
-//            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-        ),
-//        .binaryTarget(name: "AgoraRtmKit-OC", path: "AgoraRtmKit.xcframework.zip"),
         .binaryTarget(
-            name: "AgoraRtmKit-OC",
-            url: "https://github.com/AgoraIO/AgoraRtm_Apple/releases/download/2.1.8-beta.1/AgoraRtmKit.xcframework.zip",
-            checksum: "b180e27e9cad4f2bb4787e2cb383f1cc7d2e6455da2f04ca930cb8f0746b0e09"
+            name: "AgoraRtmKit",
+            url: "https://download.agora.io/rtmsdk/release/AgoraRtmKit.xcframework.zip",
+            checksum: "40a9656b8e5978b4f421d0934f082399b97c9bca876cacb7eea7b03cbe9c9c94"
         ),
-        .testTarget(
-            name: "AgoraRtmTests",
-            dependencies: ["AgoraRtm"]
-//            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
+        .binaryTarget(
+            name: "aosl",
+            url: "https://download.agora.io/rtmsdk/release/aosl.xcframework.zip",
+            checksum: "4d1768316f2738e339627cddb3186bb74b5163241e4e47ffd05e83a41a89027d"
         )
     ]
 )
