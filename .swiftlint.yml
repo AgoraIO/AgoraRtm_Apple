@@ -1,3 +1,0 @@
-excluded:
-  - Package.swift
-  - .build/
