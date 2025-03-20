@@ -5,7 +5,5 @@
 .swiftpm/
 xcuserdata/
 xcshareddata/
-*.xcframework
-*.xcframework.zip
 Package.resolved
 docbuild

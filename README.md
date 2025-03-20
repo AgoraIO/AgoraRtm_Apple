@@ -1,7 +1,3 @@
-> [!WARNING]
-> This is a beta product
-
-
 # AgoraRtm
 
 <p align="center">
@@ -38,18 +34,4 @@ To integrate AgoraRtm into your Xcode project, you can use Swift Package Manager
 
 ## Getting Started
 
-### Initialization
-
-To get started with AgoraRtm, you need to initialize an `RtmClientConfig` instance and create an `RtmClientKit` instance with it. Here's an example:
-
-```swift
-import AgoraRtm
-
-// Create an `RtmClientConfig` instance
-let rtmConfig = RtmClientConfig(
-    appId: "example-appId",
-    userId: "example-username"
-)
-
-let rtmClient = RtmClientKit(config: rtmConfig, delegate: self)
-```
+For a complete understanding of how to use the SDK and its various functionalities, please refer to the [full documentation](https://docs.agora.io/en/signaling/get-started/sdk-quickstart?platform=ios).
