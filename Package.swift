@@ -13,8 +13,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "AgoraRtmKit",
-            url: "https://download.agora.io/rtm2/release/AgoraRtmKit.xcframework_2.3.0.zip",
-            checksum: "a789d38bf63c97ab9db6c6574fd17de3e820dae44b449ca680624a57fcebb3b3"
+            url: "https://download.agora.io/rtm2/release/AgoraRtmKit.xcframework_2.3.1.zip",
+            checksum: "8b40e9352776f07a8184f1a23b85c2a160f74d85a7c5230b992f6e0ad3826fe1"
         ),
         .binaryTarget(
             name: "aosl",
